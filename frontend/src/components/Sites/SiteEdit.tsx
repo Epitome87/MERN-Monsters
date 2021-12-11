@@ -1,16 +1,24 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import classes from './SiteCreation.module.css';
+import classes from './SiteEdit.module.css';
+import { SitesContext } from '../../contexts/SitesContext';
 
-const SiteCreation: React.FC = () => {
+const SiteEdit: React.FC = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  const sitesContext = useContext(SitesContext);
+  const siteToEdit = sitesContext.sites.find(
+    (site) => site._id === params.siteId
+  );
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [date, setDate] = useState<Date>();
+  console.log('TEST', siteToEdit);
+
+  const [name, setName] = useState(siteToEdit?.name);
+  const [description, setDescription] = useState(siteToEdit?.description);
+  const [date, setDate] = useState(new Date(siteToEdit!.date));
 
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -36,15 +44,15 @@ const SiteCreation: React.FC = () => {
     };
 
     axios
-      .post('http://localhost:5000/sites/add', site)
+      .post(`http://localhost:5000/sites/update/${params.siteId}`, site)
       .then((res) => console.log(res.data));
 
     navigate('/');
   };
 
   return (
-    <section className={classes.SiteCreation}>
-      <h1>Create New Site</h1>
+    <section className={classes.SiteEdit}>
+      <h1>Edit Site</h1>
       <form onSubmit={handleSubmitForm}>
         <div className={classes.inputGroup}>
           <label htmlFor='name'>Name</label>
@@ -72,11 +80,11 @@ const SiteCreation: React.FC = () => {
         </div>
 
         <div className={classes.inputGroup}>
-          <button type='submit'>Create Site</button>
+          <button type='submit'>Confirm Edit</button>
         </div>
       </form>
     </section>
   );
 };
 
-export default SiteCreation;
+export default SiteEdit;

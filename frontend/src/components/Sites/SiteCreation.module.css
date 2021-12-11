@@ -1,0 +1,19 @@
+.SiteCreation {
+  display: flex;
+  flex-direction: column;
+}
+
+.SiteCreation .inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.SiteCreation .inputGroup input {
+  border-radius: 10px;
+}
+
+.SiteCreation button {
+  margin-top: 3rem;
+  border-radius: 10px;
+  font-family: inherit;
+}
