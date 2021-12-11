@@ -1,17 +1,27 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Link, Routes, Route, Outlet } from 'react-router-dom';
-import { SitesContext } from '../contexts/SitesContext';
-import SiteDetails from '../components/Sites/SiteDetails';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import classes from './Sites.module.css';
 import site01 from '../images/Site01.jpg';
 
+type Site = {
+  _id: string;
+  name: string;
+  description: string;
+  date: Date;
+}
+
 const Sites: React.FC = () => {
-  const { sites, fetchSites } = useContext(SitesContext);
+  const [sites, setSites] = useState<Site[]>([]);
 
   useEffect(() => {
-    console.log('USE');
     fetchSites();
   }, []);
+
+  const fetchSites = async () => {
+    const response = await axios.get(`http://localhost:5000/sites/`);
+    setSites(response.data);
+  };
 
   return (
     <section className={classes.Sites}>

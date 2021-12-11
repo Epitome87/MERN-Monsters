@@ -14,13 +14,14 @@ export const SitesContext = React.createContext<SitesContextObj>({
 
 const SitesContextProvider: React.FC = (props) => {
   const [sites, setSites] = useState<Site[]>([]);
-  console.log('???');
 
   const fetchSites = async () => {
-    console.log('FETCHING');
+    console.log('FETCHING CONTEXT');
     const res: { data: any } = await axios.get('http://localhost:5000/sites');
     const fetchedSites = res.data;
     setSites(fetchedSites);
+
+    return fetchedSites;
   };
 
   const contextValue: SitesContextObj = {

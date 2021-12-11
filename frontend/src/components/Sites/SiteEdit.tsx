@@ -1,25 +1,32 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import classes from './SiteEdit.module.css';
-import { SitesContext } from '../../contexts/SitesContext';
 
 const SiteEdit: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const sitesContext = useContext(SitesContext);
-  const siteToEdit = sitesContext.sites.find(
-    (site) => site._id === params.siteId
-  );
 
-  console.log('TEST', siteToEdit);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState(new Date());
 
-  const [name, setName] = useState(siteToEdit?.name);
-  const [description, setDescription] = useState(siteToEdit?.description);
-  const [date, setDate] = useState(new Date(siteToEdit!.date));
+  useEffect(() => {
+    fetchSite();
+  }, []); // DidMount
 
+  const fetchSite = async () => {
+    const response = await axios.get(
+      `http://localhost:5000/sites/${params.siteId}`
+    );
+
+    // TODO: Causes 3 re-renders: Should I combine into a "Site" object?
+    setName(response.data.name);
+    setDescription(response.data.description);
+    setDate(new Date(response.data.date));
+  };
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
@@ -47,7 +54,7 @@ const SiteEdit: React.FC = () => {
       .post(`http://localhost:5000/sites/update/${params.siteId}`, site)
       .then((res) => console.log(res.data));
 
-    navigate('/');
+    navigate(`/sites/${params.siteId}`);
   };
 
   return (

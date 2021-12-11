@@ -1,15 +1,36 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { SitesContext } from '../../contexts/SitesContext';
+import axios from 'axios';
 import classes from './SiteDetails.module.css';
 import tempImage from '../../images/Site02.jpg';
 
+type Site = {
+  _id: string;
+  name: string;
+  description: string;
+  date: Date;
+};
+
 const SiteDetails: React.FC = (props) => {
-  const { sites } = useContext(SitesContext);
   const params = useParams();
   const navigate = useNavigate();
+  const [site, setSite] = useState<Site>();
 
-  const searchedSite = sites.find((site) => site._id === params.siteId);
+  useEffect(() => {
+    fetchSite();
+  }, []);
+
+  const fetchSite = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/sites/${params.siteId}`
+      );
+
+      setSite(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleEditClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     navigate(`/sites/${params.siteId}/edit`);
@@ -17,11 +38,11 @@ const SiteDetails: React.FC = (props) => {
 
   return (
     <article className={classes.SiteDetails}>
-      <h1>{searchedSite?.name}</h1>
-      <p>{searchedSite?.description}</p>
+      <h1>{site?.name}</h1>
+      <p>{site?.description}</p>
       <img
         src={tempImage}
-        alt={searchedSite?.name}
+        alt={site?.name}
         style={{ width: '250px', borderRadius: '5px' }}
       />
       <button onClick={handleEditClick}>Edit</button>

@@ -20,3 +20,7 @@
 .Sites .link {
   text-decoration: none;
 }
+
+.Sites img {
+  width: 300px;
+}
