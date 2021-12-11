@@ -1,6 +1,8 @@
 # MERN Monsters
 
-## This is the start of my Mongoose-Express-React-Node stack app! It will be a very simple CRUD app, done simply for practice. Although tentative for now, the concept will probably be a playful app where fictitious monsters come to share, comment on, and review their favorite places to scare humans. I am choosing this concept since I can have some fun with the design and a little bit of writing. Since this is an app for merely practice and no one would find much use from most beginner CRUD apps to begin with, I figure it's best to make something at least with a bit of playfulness.
+## Description
+
+This is the start of my Mongoose-Express-React-Node stack app! It will be a very simple CRUD app, done simply for practice. Although tentative for now, the concept will probably be a playful app where fictitious monsters come to share, comment on, and review their favorite places to scare humans. I am choosing this concept since I can have some fun with the design and a little bit of writing. Since this is an app for merely practice and no one would find much use from most beginner CRUD apps to begin with, I figure it's best to make something at least with a bit of playfulness.
 
 ## Potential Design
 
@@ -48,3 +50,8 @@ Backend
 - NodeJS
 - Express
 - Mongo / MongoDB
+
+## Progress
+
+`12/10/2021: Initial commit`
+`12/10/2021: Backend foundations complete. Basic routers for Sites and Users. Basic GET/POST/DELETE manipulations on the Site and User models, which are successfully retrieved from and updated to the Atlas MongoDB`
