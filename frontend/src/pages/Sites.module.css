@@ -1,0 +1,22 @@
+.Sites {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Sites .list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  list-style-type: none;
+  gap: 5rem;
+}
+
+.Sites .list li {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.Sites .link {
+  text-decoration: none;
+}

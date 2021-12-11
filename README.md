@@ -55,3 +55,4 @@ Backend
 
 `12/10/2021: Initial commit`
 `12/10/2021: Backend foundations complete. Basic routers for Sites and Users. Basic GET/POST/DELETE manipulations on the Site and User models, which are successfully retrieved from and updated to the Atlas MongoDB`
+`12/10/2021: Some of the frontend foundations complete. This includes simple navigation bar with links to Home, Users, and Sites. The sites route correctly loops through all fetched Site models in the database and renders them as a clickable element, upon which the user is taken to a page that details that specific Site. Very basic styling, no ability to edit, add, or delete Sites via the frontend.`
