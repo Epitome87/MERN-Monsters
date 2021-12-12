@@ -1,5 +1,6 @@
 import express from 'express';
 import Site from '../models/site.model.js';
+import User from '../models/user.model.js';
 
 const router = express.Router();
 
@@ -16,17 +17,24 @@ router.route('/add').post(async (req, res) => {
   const { name, description } = req.body;
   const date = Date.parse(req.body.date);
 
+  // TODO: Retrieve actual author (based on...user's name?) rather than hard-coded
+  const authorId = await User.findOne({ username: 'Matthew' }).exec();
+
   const newSite = new Site({
     name,
     description,
     date,
+    author: authorId._id,
   });
 
   try {
     const saveNewSite = await newSite.save();
-    res.json('Site added!');
+    console.log(`New Site has been added on ${Date().toString()}`);
+    res.json(`Site added successfully on ${Date().toString()}`);
   } catch (err) {
-    res.status(400).json('Error: ' + err);
+    res
+      .status(400)
+      .json(`Error attempting to add Site on ${Date().toString()}:` + err);
   }
 });
 
@@ -48,7 +56,7 @@ router.route('/:id').delete(async (req, res) => {
   }
 });
 
-router.route('/update/:id').post(async (req, res) => {
+router.route('/:id/edit').patch(async (req, res) => {
   try {
     const site = await Site.findById(req.params.id);
 
@@ -58,7 +66,7 @@ router.route('/update/:id').post(async (req, res) => {
 
     try {
       await site.save();
-      res.json('Site updated successfully!');
+      res.json({ site, message: 'Site updated successfully!' });
     } catch (err) {
       res.status(400).json('Error: ' + err);
     }

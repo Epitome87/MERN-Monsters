@@ -9,6 +9,8 @@ type Site = {
   name: string;
   description: string;
   date: Date;
+  author: string;
+  reviews: any[];
 };
 
 const SiteDetails: React.FC = (props) => {
@@ -45,9 +47,17 @@ const SiteDetails: React.FC = (props) => {
         alt={site?.name}
         style={{ width: '250px', borderRadius: '5px' }}
       />
+      <p>Discovered by: {site?.author}</p>
+      {site?.reviews.map((review) => {
+        return <p>Review: {review}</p>;
+      })}
       <button onClick={handleEditClick}>Edit</button>
     </article>
   );
 };
 
 export default SiteDetails;
+
+// 1: 61b54d85ee4e0e2f9162a3f6
+// 2: 61b54dcbeaff6093fa16bad9
+// 5: 61b55ba712fdd51995d6e22b

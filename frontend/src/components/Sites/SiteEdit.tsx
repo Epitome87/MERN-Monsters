@@ -51,8 +51,12 @@ const SiteEdit: React.FC = () => {
     };
 
     axios
-      .post(`http://localhost:5000/sites/update/${params.siteId}`, site)
-      .then((res) => console.log(res.data));
+      .patch(`http://localhost:5000/sites/${params.siteId}/edit`, site)
+      .then((res) => {
+        //   res.data => { site: (updated info), message: Sucess / error }
+        console.log(res.data);
+        // TODO: Cause re-render to update new, edited info
+      });
 
     navigate(`/sites/${params.siteId}`);
   };
