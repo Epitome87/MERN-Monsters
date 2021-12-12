@@ -20,7 +20,7 @@ router.route('/add').post(async (req, res) => {
   try {
     const saveNewUser = await newUser.save();
     console.log(`New user has been added on ${Date().toString()}`);
-    res.json('User added!');
+    res.json(`User added successfully: ${saveNewUser}`);
   } catch (err) {
     console.log(`Failed to add user on ${Date().toString()}`);
     res.status(400).json('Error: ' + err);
