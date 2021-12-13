@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,11 +17,7 @@ const UserDetails: React.FC<UserDetailsProps> = (props) => {
   const userId = params.userId;
   const [user, setUser] = useState<User>();
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const response = await axios.get(`http://localhost:5000/users/${userId}`);
       setUser(response.data);
@@ -29,7 +25,11 @@ const UserDetails: React.FC<UserDetailsProps> = (props) => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   return (
     <div>

@@ -7,6 +7,7 @@ import Users from './pages/Users';
 import SiteDetails from './components/Sites/SiteDetails';
 import SiteCreation from './components/Sites/SiteCreation';
 import SiteEdit from './components/Sites/SiteEdit';
+import ReviewDetails from './components/Reviews/ReviewDetails';
 import Container from 'react-bootstrap/Container';
 import './App.css';
 
@@ -24,6 +25,8 @@ function App() {
           <Route path='/sites/create' element={<SiteCreation />} />
           <Route path='/sites/:siteId' element={<SiteDetails />} />
           <Route path='/sites/:siteId/edit' element={<SiteEdit />} />
+          <Route path="/sites/:siteId/reviews" element={<p>Reviews</p>} />
+          <Route path="/sites/:siteId/reviews/:reviewId" element={<ReviewDetails />} />
           <Route path='*' element={<p>Not Found</p>} />
         </Routes>
       </Container>

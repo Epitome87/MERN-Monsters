@@ -35,6 +35,17 @@ router.route('/').get(async (req, res) => {
   }
 });
 
+router.route('/:reviewId').get(async (req, res) => {
+  const { reviewId } = req.params;
+
+  try {
+    const review = await Review.findById(reviewId).populate('author');
+    res.json(review);
+  } catch (err) {
+    res.status(400).json('Error: ' + err);
+  }
+});
+
 // Add a new Review to the appropriate Site
 router.route('/').post(async (req, res) => {
   const { body, rating } = req.body;
@@ -65,6 +76,7 @@ router.route('/').post(async (req, res) => {
 });
 
 router.route('/:reviewId').delete(async (req, res) => {
+  console.log('Attempting to GET a specific Review');
   const { siteId, reviewId } = req.params;
 
   try {

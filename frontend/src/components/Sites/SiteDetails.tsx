@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import classes from './SiteDetails.module.css';
 import tempImage from '../../images/Site02.jpg';
@@ -9,34 +9,38 @@ type Site = {
   name: string;
   description: string;
   date: Date;
-  author: string;
+  author: { username: string };
   reviews: any[];
 };
 
 const SiteDetails: React.FC = (props) => {
-  const params = useParams();
+  const { siteId } = useParams();
   const navigate = useNavigate();
   const [site, setSite] = useState<Site>();
 
   useEffect(() => {
+    const fetchSite = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/sites/${siteId}`
+        );
+
+        setSite(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     fetchSite();
-  }, []);
-
-  const fetchSite = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/sites/${params.siteId}`
-      );
-
-      setSite(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, [siteId]);
 
   const handleEditClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    navigate(`/sites/${params.siteId}/edit`);
+    navigate(`/sites/${siteId}/edit`);
   };
+
+  if (!site) {
+    return <p>Error retrieving Site information</p>;
+  }
 
   return (
     <article className={classes.SiteDetails}>
@@ -47,10 +51,22 @@ const SiteDetails: React.FC = (props) => {
         alt={site?.name}
         style={{ width: '250px', borderRadius: '5px' }}
       />
-      <p>Discovered by: {site?.author}</p>
-      {site?.reviews.map((review) => {
-        return <p>Review: {review}</p>;
-      })}
+      <p>Discovered by: {site.author ? site.author.username : 'Unknown'}</p>
+      <ul>
+        <p>
+          {site.reviews && site.reviews.length > 1 ? 'Reviews' : 'No Reviews'}
+        </p>
+        {site?.reviews.map((review) => {
+          return (
+            <li key={review._id}>
+              <Link to={`/sites/${siteId}/reviews/${review._id}`}>
+                Review: {review.author.username}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+
       <button onClick={handleEditClick}>Edit</button>
     </article>
   );

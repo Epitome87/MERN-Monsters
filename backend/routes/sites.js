@@ -40,7 +40,14 @@ router.route('/add').post(async (req, res) => {
 
 router.route('/:id').get(async (req, res) => {
   try {
-    const site = await Site.findById(req.params.id);
+    const site = await Site.findById(req.params.id)
+      .populate('author')
+      .populate({
+        path: 'reviews',
+        model: 'Review',
+        populate: { path: 'author', model: 'User' },
+      });
+    console.log(site);
     res.json(site);
   } catch (err) {
     res.status(400).json('Error: ' + err);
