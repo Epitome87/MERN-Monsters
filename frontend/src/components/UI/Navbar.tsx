@@ -22,15 +22,28 @@ const NavigationBar: React.FC = (props) => {
             </Nav.Link>
           </Nav>
           <Nav>
-            <NavDropdown title='Profile' id='basic-nav-dropdown'>
-              <NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.2'>
-                Another action
+            <NavDropdown title='Matthew' id='basic-nav-dropdown'>
+              <NavDropdown.Item
+                as={NavLink}
+                to={`/users/61b3f5a94ef9f2d7181e478b`}
+              >
+                Profile
               </NavDropdown.Item>
-              <NavDropdown.Item href='#action/3.3'>Something</NavDropdown.Item>
+              <NavDropdown.Item
+                as={NavLink}
+                to={`/users/61b3f5a94ef9f2d7181e478b/friends`}
+              >
+                Friends
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                as={NavLink}
+                to={`/users/61b3f5a94ef9f2d7181e478b/reviews`}
+              >
+                My Reviews
+              </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href='#action/3.4'>
-                Separated link
+              <NavDropdown.Item as={NavLink} to=''>
+                Sign Out
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

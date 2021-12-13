@@ -8,6 +8,7 @@ type User = {
 
 type Review = {
   author: User;
+  title: string;
   body: string;
   rating: number;
 };
@@ -32,6 +33,7 @@ const ReviewDetails: React.FC = () => {
     <div>
       <h1>Review</h1>
       <p>Author: {review?.author.username}</p>
+      <p>Title: {review?.title}</p>
       <p>Body: {review?.body}</p>
       <p>Rating: {review?.rating}</p>
     </div>

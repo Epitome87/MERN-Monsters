@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
@@ -7,26 +7,25 @@ import classes from './SiteEdit.module.css';
 
 const SiteEdit: React.FC = () => {
   const navigate = useNavigate();
-  const params = useParams();
+  const { siteId } = useParams();
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(new Date());
 
-  useEffect(() => {
-    fetchSite();
-  }, []); // DidMount
-
-  const fetchSite = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/sites/${params.siteId}`
-    );
+  const fetchSite = useCallback(async () => {
+    const response = await axios.get(`http://localhost:5000/sites/${siteId}`);
 
     // TODO: Causes 3 re-renders: Should I combine into a "Site" object?
     setName(response.data.name);
     setDescription(response.data.description);
     setDate(new Date(response.data.date));
-  };
+  }, [siteId]);
+
+  useEffect(() => {
+    fetchSite();
+  }, [fetchSite]); // DidMount
+
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
@@ -51,14 +50,14 @@ const SiteEdit: React.FC = () => {
     };
 
     axios
-      .patch(`http://localhost:5000/sites/${params.siteId}/edit`, site)
+      .patch(`http://localhost:5000/sites/${siteId}/edit`, site)
       .then((res) => {
         //   res.data => { site: (updated info), message: Sucess / error }
         console.log(res.data);
         // TODO: Cause re-render to update new, edited info
       });
 
-    navigate(`/sites/${params.siteId}`);
+    navigate(`/sites/${siteId}`);
   };
 
   return (

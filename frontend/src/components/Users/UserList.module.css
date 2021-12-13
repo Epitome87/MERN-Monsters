@@ -1,0 +1,35 @@
+.UserList {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  font-family: 'Poppins';
+  font-weight: bold;
+}
+
+.UserList li {
+  /* display: flex; */
+  list-style: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  border: 3px solid rgba(235, 255, 255, 0.9);
+  transition: 0.3s ease-in-out;
+}
+
+.UserList li:hover {
+  transform: scale(1.05);
+  border: 3px solid rgba(7, 216, 216, 0.9);
+
+}
+
+.UserList li a {
+  color: black;
+  text-decoration: none;
+}
+
+.UserList li img {
+  width: 200px;
+  border-radius: 10px;
+}

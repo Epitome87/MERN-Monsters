@@ -29,7 +29,7 @@ router.route('/add').post(async (req, res) => {
 
 router.route('/:id').get(async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).populate('reviews');
     res.json(user);
   } catch (err) {
     res.status(400).json('Error: ' + err);
