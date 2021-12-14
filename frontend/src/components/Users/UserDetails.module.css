@@ -1,0 +1,81 @@
+.UserDetails {
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  text-align: center;
+  gap: 2rem;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+.profile {
+  max-width: 800px;
+  flex-basis: 60%;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.extra {
+  flex-basis: 40%;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: start;
+}
+
+.profile img {
+  max-width: 250px;
+  border-radius: 50%;
+  /* border: 2px solid white; */
+  background-color: #4ba3c3;
+  margin-bottom: 2rem;
+}
+
+.profile .username {
+  font-size: 3rem;
+  letter-spacing: 5px;
+}
+
+.profile .collections {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.profile .sites {
+  width: 250px;
+  padding: 1rem 2rem;
+  background-color: #37ff8b;
+  border-radius: 10px;
+  color: white;
+  font-family: inherit;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.7);
+}
+
+.profile .reviews {
+  width: 250px;
+  padding: 1rem 2rem;
+  background-color: #bfacc8;
+  border-radius: 10px;
+  color: white;
+  font-family: inherit;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.7);
+}
+
+.profile .friends {
+  background-color: #d1345b;
+  width: 250px;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  color: white;
+  font-family: inherit;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.7);
+}
+
+.extra {
+}

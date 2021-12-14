@@ -109,3 +109,5 @@ const site = await Site.findById(siteId).populate({
 });
 const reviews = site.reviews;
 ```
+
+- Not too many struggles or insights today. A lot of time was spent learning about best folder / file structuring of React CRUD apps, as well as creating database content for multiple Users, their biographies, their reviews, etc.

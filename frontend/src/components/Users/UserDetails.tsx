@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import ReviewDetails from '../Reviews/ReviewDetails';
+import classes from './UserDetails.module.css';
 
 type Review = {
   _id: string;
-  author: string;
+  author: User;
   title: string;
   body: string;
   rating: number;
@@ -21,6 +23,7 @@ const UserDetails: React.FC = () => {
   const params = useParams();
   const { userId } = params;
   const [user, setUser] = useState<User>();
+  const [extra, setExtra] = useState('');
 
   const fetchUser = useCallback(async () => {
     try {
@@ -35,16 +38,50 @@ const UserDetails: React.FC = () => {
     fetchUser();
   }, [fetchUser]);
 
-  const renderedUserReviews = user?.reviews.map((review) => {
-    return <li key={review._id}>{review.body}</li>;
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setExtra(event.currentTarget.name);
+  };
+
+  const renderedReviews = user?.reviews.map((review) => {
+    return (
+      <li key={review._id}>
+        <p>{review?.title}</p>
+        <p>{review?.body}</p>
+        <p>Rating {review?.rating}</p>
+      </li>
+    );
   });
 
   return (
-    <div>
-      <h2>{user?.username}</h2>
-      <p>{user?.biography}</p>
-      <p>{`${user?.username}'s Reviews`}</p>
-      {renderedUserReviews}
+    <div className={classes.UserDetails}>
+      <section className={classes.profile}>
+        <img
+          src={`https://robohash.org/${user?.username}.png?set=set2`}
+          alt={`Monster ${user?.username}`}
+        />
+        <h2 className={classes.username}>{user?.username}</h2>
+        <p>{user?.biography}</p>
+        <div className={classes.collections}>
+          <button
+            className={classes.sites}
+            onClick={handleButtonClick}
+            name='sites'
+          >{`${user?.username}'s Sites`}</button>
+          <button
+            className={classes.reviews}
+            onClick={handleButtonClick}
+            name='reviews'
+          >{`${user?.username}'s Reviews`}</button>
+          <button
+            className={classes.friends}
+            onClick={handleButtonClick}
+            name='friends'
+          >{`${user?.username}'s Friends`}</button>
+        </div>
+      </section>
+      <section className={classes.extra}>
+        <ul>{extra === 'reviews' ? renderedReviews : extra}</ul>
+      </section>
     </div>
   );
 };
